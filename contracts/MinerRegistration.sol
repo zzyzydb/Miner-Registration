@@ -10,7 +10,7 @@ contract MinerRegistration{
         uint height; // Block height the set belongs to
     }
     
-    // Structure of each miner
+
     struct Miner{
         address miner;  // Address (120bit) of miner
         string regState; // "unregistered" or "registered"
