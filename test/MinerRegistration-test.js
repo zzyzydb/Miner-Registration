@@ -13,18 +13,21 @@ contract('MinerReg', function(accounts){
         instance = await MinerReg.new(web3.utils.toWei('1','ether'), { from: manager }); // create a contract instance
     });
     
+    // check the contract manager
     it("deploys a contract", async() => {
         assert.equal(await instance.manager.call(), manager, "The manager is who deploys the smart contract.");
-    }); // check the contract manager
+    });
 
+    // check if the miner put 1 ether
     it("requires miners to contribute money", async() => {
         await instance.Contribute({
             value: web3.utils.toWei('1','ether'),
             from: miner
         });
         assert.ok(await instance.miners.call(miner));
-    }); // check if the miner put 1 ether
+    });
     
+    // check if the miner creates a transaction set
     it("create a new transaction set", async() => {
         await instance.Contribute({
             value: web3.utils.toWei('1','ether'),
@@ -33,8 +36,9 @@ contract('MinerReg', function(accounts){
         await instance.CreateTranset(2, ['0xb6dec9180ddb217f0cf1b1a3f73df4270dd5252c8d89b5b868b290738d4913',
             '0x3565c92c7393a6599a4f937f9e8f57a57b0140b6aba66b42faca6ee5b3842e83'], 1, { from: miner });
         assert.ok(await instance.tranSet.call());
-    }); // check if the miner creates a transaction set
+    });
 
+    // check if the miner passes the registration and gets a voucher
     it("The process of registering transactions", async() => {
         await instance.Contribute({
             value: web3.utils.toWei('1','ether'),
@@ -48,8 +52,9 @@ contract('MinerReg', function(accounts){
         assert.equal(await instance.blockheight.call(), 1, "The block height submitted by the miner is valid.");
         const regResult = await instance.miners.call(miner);
         assert.equal(regResult[1], "registered", "This miner has passed the registration.");
-    }); // check if the miner passes the registration and gets a voucher
+    });
 
+    // check if the new block is valid (in this test, we submit a invalid block)
     it("check the validity of one chain", async() => {
         await instance.Contribute({
             value: web3.utils.toWei('1','ether'),
@@ -63,8 +68,9 @@ contract('MinerReg', function(accounts){
             '0x56496778973345ffd5af9d6874d647612ae3ceb8ee231099fd9991578e3af56b', 
             '0x5f0d44e8f7277180bd11735ae6c43d41b0f7195311986a9c99010a7a92b53d82', 1, { from: manager });
         console.log(isValid.logs[0].args.isvalid);
-    }); // check if the new block is valid (in this test, we submit a invalid block)
+    });
 
+    // check if the registered miner can withdraw his deposit (1 ether)
     it("withdraw the deposit", async() => {
         await instance.Contribute({
             value: web3.utils.toWei('1','ether'),
@@ -80,5 +86,5 @@ contract('MinerReg', function(accounts){
         balance = parseFloat(balance);
         console.log(balance);
         assert(balance > 99);
-    }); // check if the registered miner can withdraw his deposit (1 ether)
+    });
 });
