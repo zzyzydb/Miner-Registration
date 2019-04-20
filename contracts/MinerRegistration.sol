@@ -103,7 +103,7 @@ contract MinerRegistration{
     function CheckHeight() public restricted {
         /* Cancel voucher record for malicious miners
            who do not actually publish blocks */
-        if(blockheight != 1){ // blockheight != block.number
+        if(blockheight != 1){ // "1" is used for test, real-use is: blockheight != block.number
             logger[blockheight][voucher] = false;
             blockheight -= 1;
         }else {
