@@ -17,10 +17,10 @@ A smart contract-based miner registration and block validation
 ### Setup
 Install truffle:
 ```
-npm install -g truffle
+$ npm install -g truffle
 ```
-Install ganache: https://github.com/trufflesuite/ganache/releases
+Install ganache: <br> https://github.com/trufflesuite/ganache/releases
 ### Test
 ```
-truffle test
+$ truffle test
 ```
