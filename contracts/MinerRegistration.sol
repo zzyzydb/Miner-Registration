@@ -49,7 +49,7 @@ contract MinerRegistration{
         manager = msg.sender;
         deposit = _deposit;
         voucher = '';
-        blockheight = 0; // blockheight = block.number;
+        blockheight = 0; // "0" is used for test, real-use is: blockheight = block.number;
     }
     
     // Function of the miner's deposit
